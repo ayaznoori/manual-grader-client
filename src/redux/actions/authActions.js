@@ -1,0 +1,25 @@
+import axios from "axios";  
+import Cookies from "js-cookie";  
+
+ 
+export const loginUser = (credentials) => async (dispatch) => {  
+  dispatch({ type: "LOGIN_START" }); 
+  try {  
+    const res = await axios.post("http://localhost:5000/api/auth/login", credentials, { withCredentials: true });  
+    dispatch({  
+      type: "LOGIN_SUCCESS",  
+      payload: { user: res.data.user, token: res.data.token },  
+    });  
+    Cookies.set("token", res.data.token); 
+  } catch (error) {  
+    const errorMessage = error.response?.data?.message || "Login failed. Please try again.";  
+    dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });   
+    console.error("Login Error:", error);  
+  }  
+};  
+
+
+export const logoutUser = () => (dispatch) => {  
+  Cookies.remove("token"); 
+  dispatch({ type: "LOGOUT" }); 
+};
