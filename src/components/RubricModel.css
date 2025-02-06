@@ -1,0 +1,98 @@
+/* Modal overlay background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  /* Modal content */
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    max-height: 80vh; /* Prevent modal from taking up the whole screen */
+    overflow-y: auto; /* Allow scroll if modal content exceeds height */
+  }
+  
+  /* Modal actions section (Close button) */
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Input fields styling */
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Error message styling */
+  .error-text {
+    color: red;
+    font-size: 14px;
+  }
+  
+  /* Table Container (to enable scrollable behavior) */
+  .rubrics-table-container {
+    margin-top: 20px;
+    max-height: 300px; /* Set a fixed height for the table container */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  /* Table styles */
+  .rubrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .rubrics-table th, .rubrics-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .rubrics-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .rubrics-table td button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .rubrics-table td button:hover {
+    background-color: #d32f2f;
+  }
+  

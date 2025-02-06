@@ -11,6 +11,8 @@ export const loginUser = (credentials) => async (dispatch) => {
       payload: { user: res.data.user, token: res.data.token },  
     });  
     Cookies.set("token", res.data.token); 
+    Cookies.set("userid", res.data.user._id); 
+    Cookies.set("role",res.data.user?.role)
   } catch (error) {  
     const errorMessage = error.response?.data?.message || "Login failed. Please try again.";  
     dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });   
@@ -20,6 +22,8 @@ export const loginUser = (credentials) => async (dispatch) => {
 
 
 export const logoutUser = () => (dispatch) => {  
-  Cookies.remove("token"); 
+  Cookies.remove("token");
+  Cookies.remove("userid"); 
+  Cookies.remove("role")
   dispatch({ type: "LOGOUT" }); 
 };

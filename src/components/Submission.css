@@ -1,0 +1,194 @@
+/* Base styles */
+.submissions-container {
+    width: 90vw;
+    padding: 2rem;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    font-size: 12px;
+  }
+  .table-wrapper{
+    width: 90vw;
+    overflow: scroll;
+
+  }
+  
+  .submissions-container h2 {
+    width: 100%;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Table styles */
+  .submissions-table {
+    width: 100vw;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    font-size: 12px;
+  }
+  
+  .submissions-table thead {
+    background-color: #f2f0f0;
+    color: black;
+  }
+  .submissions-table thead>tr>th {
+    font-weight: bold;
+    font-size: 10px;
+  }
+  
+  .submissions-table th{
+    padding: 0.8rem; /* Reduce padding to make table more compact */
+    text-align: left;
+    white-space: nowrap; /* Prevents text from wrapping */
+    font-weight: 800;
+  }
+  .submissions-table td {
+    padding: 0.8rem; /* Reduce padding to make table more compact */
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap; /* Prevents text from wrapping */
+  }
+  
+  .submissions-table th {
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  
+  /* Checkbox styling */
+  .submissions-table input[type="checkbox"] {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+  }
+  .graded-by select{
+    width: 150px;
+    padding: 0;
+    border-radius: 0;
+  }
+  
+  /* Submit button */
+  .submit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Status styling */
+  .status-pending {
+    color: #dc3545;
+    font-weight: 500;
+  }
+  
+  .status-completed {
+    color: #28a745;
+    font-weight: 500;
+  }
+  
+  /* Link styling */
+  .submission-link {
+    color: #1956db;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .submission-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Loading and error states */
+  .loading-text {
+    color: #1956db;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+  
+  .error-text {
+    color: #dc3545;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+
+  .submission-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background: #f8f9fa; /* Light gray background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stat {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #fff;
+  }
+  
+  .stat p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .stat span {
+    display: block;
+    margin-top: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Colors for different statuses */
+  .graded {
+    background: #28a745; /* Green */
+  }
+  
+  .pending {
+    background: #ffc107; /* Yellow */
+    color: #212529;
+  }
+  
+  .assigned {
+    background: #007bff; /* Blue */
+  }
+  
+  .unassigned {
+    background: #dc3545; /* Red */
+  }
+  
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .submissions-container {
+      padding: 1rem;
+    }
+    
+    .submissions-table {
+      display: block;
+      overflow-x: auto;
+    }
+    
+    .submissions-table th,
+    .submissions-table td {
+      padding: 0.8rem;
+      font-size: 10px;
+    }
+  }

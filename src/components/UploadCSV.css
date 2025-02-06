@@ -1,0 +1,29 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+ 
+  /* Success and Error Messages */
+  .modal-content p {
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+  
+  .modal-content p.success {
+    color: green;
+  }
+  
+  .modal-content p.error {
+    color: red;
+  }
+  

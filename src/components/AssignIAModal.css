@@ -1,0 +1,73 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 400px;
+  max-width: 600px;
+}
+
+.ia-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.ia-table th, .ia-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.ia-table select, .ia-table input {
+  width: 100%;
+  padding: 5px;
+}
+
+.add-more-btn {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background: #007bff;
+  color: white;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.add-more-btn:hover {
+  background: #0056b3;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.remove-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: darkred;
+}
+
+button:hover {
+  opacity: 0.8;
+}

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // Action Types
 export const FETCH_ASSIGNMENTS_REQUEST = "FETCH_ASSIGNMENTS_REQUEST";
@@ -22,7 +23,7 @@ export const fetchAssignments = () => async (dispatch) => {
 // Create Assignment
 export const createAssignment = (assignmentData) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/assignments", assignmentData,{withCredentials:true});
+    const response = await axios.post("http://localhost:5000/api/assignments/create", assignmentData,{withCredentials:true});
     dispatch({ type: CREATE_ASSIGNMENT_SUCCESS, payload: response.data });
   } catch (error) {
     console.error("Error creating assignment:", error);
@@ -38,3 +39,12 @@ export const deleteAssignment = (id) => async (dispatch) => {
     console.error("Error deleting assignment:", error);
   }
 };
+export const updateAssignment = (id, updatedData) => async (dispatch) => {
+    try {
+      await axios.put(`http://localhost:5000/api/assignments/${id}`, updatedData,{withCredentials:true});
+      dispatch({ type: "UPDATE_ASSIGNMENT_SUCCESS", payload: updatedData });
+      toast.success("Assignment updated successfully!");
+    } catch (error) {
+      toast.error("Error updating assignment.");
+    }
+  };

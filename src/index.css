@@ -1,0 +1,23 @@
+button {
+    background-color: #1956db;
+    margin: 5px;
+    color: white;
+    padding: 5px 5px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  button:hover {
+    background-color: #1548b3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
