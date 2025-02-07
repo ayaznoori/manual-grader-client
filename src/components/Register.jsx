@@ -23,7 +23,7 @@ const Register = () => {
         email,  
         password,  
         role,  
-      });  
+      },{withCredentials:true});  
       if (res.status === 201) {  
         setSuccessMessage("Registration successful! You can now log in.");  
         setName("");  
@@ -43,7 +43,7 @@ const Register = () => {
   return (  
     <div className="register-container">  
       <div className="register-card">  
-        <h2>Register</h2>  
+        <h2>Create User</h2>  
         {successMessage && <div className="success-message">{successMessage}</div>}  
         {errorMessage && <div className="error-message">{errorMessage}</div>}  
         <form onSubmit={handleSubmit}>  
@@ -85,7 +85,7 @@ const Register = () => {
               required  
             >  
               <option value="">Select a role</option>  
-              <option value="super-admin">Super Admin</option>  
+              <option value="super_admin">Super Admin</option>  
               <option value="admin">Admin</option>  
               <option value="user">User</option>  
             </select>  

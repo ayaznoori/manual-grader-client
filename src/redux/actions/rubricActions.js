@@ -53,3 +53,20 @@ export const deleteRubric = (rubricId) => async (dispatch) => {
     console.error("Failed to delete rubric", error);
   }
 };
+export const deleteRubricById = (assessId) => async (dispatch) => {
+    try {
+      dispatch({ type: FETCH_RUBRICS_REQUEST });
+  
+      const { data } = await axios.get(`http://localhost:5000/api/rubrics/by-assessId/${assessId}`);
+  
+      dispatch({
+        type: FETCH_RUBRICS_SUCCESS,
+        payload: data, // Array of rubrics
+      });
+    } catch (error) {
+      dispatch({
+        type: FETCH_RUBRICS_FAILURE,
+        payload: error.response?.data?.error || "Failed to fetch rubrics",
+      });
+    }
+  };

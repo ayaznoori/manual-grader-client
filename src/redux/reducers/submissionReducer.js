@@ -26,18 +26,38 @@ import {
   
       case UPDATE_SUBMISSION_REQUEST:
         return { ...state, loading: true };
-  
-      case UPDATE_SUBMISSION_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          submissions: state.submissions.map((submission) =>
-            submission._id === action.payload._id ? action.payload : submission
-          ),
-        };
-  
+        case UPDATE_SUBMISSION_SUCCESS:
+              const updatedSubmissions = state.submissions.map((submission) =>
+              submission.submissionId === action.payload.submissionId
+                ? { ...submission, ...action.payload } // Update the specific submission
+                : submission
+            );
+            return {
+              ...state,
+              loading: false,
+              submissions: updatedSubmissions,
+            };
+          
       case UPDATE_SUBMISSION_FAILURE:
         return { ...state, loading: false, error: action.payload };
+
+        case "UPDATE_IA_REQUEST":
+            return { ...state, loading: true };
+          
+          case "UPDATE_IA_SUCCESS":
+            return {
+              ...state,
+              loading: false,
+              submissions: state.submissions.map((submission) =>
+                submission.submissionId === action.payload.submissionId
+                  ? { ...submission, gradedBy: action.payload.gradedBy } // Update IA
+                  : submission
+              ),
+            };
+          
+          case "UPDATE_IA_FAILURE":
+            return { ...state, loading: false, error: action.payload };
+          
   
       default:
         return state;

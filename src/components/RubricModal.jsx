@@ -8,7 +8,6 @@ const RubricModal = ({assessmentID, assessId, closeModal }) => {
   const { rubrics, loading, error } = useSelector((state) => state.rubrics);
   const [newRubric, setNewRubric] = useState({ criteria: "", marks: "" });
   const [editingRubric, setEditingRubric] = useState(null);
-  console.log(assessmentID, assessId);
   useEffect(() => {
     dispatch(fetchRubrics(assessId));
   }, [dispatch, assessId]);

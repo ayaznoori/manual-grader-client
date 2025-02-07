@@ -1,27 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchSubmissions, updateSubmission } from "../redux/actions/submissionAction";
+import { fetchSubmissions, updateIA, updateSubmission } from "../redux/actions/submissionAction";
 import { fetchRubrics } from "../redux/actions/rubricActions";
 import { useParams } from "react-router-dom";
 import "./Submission.css";
 import AssignIAModal from "./AssignIAModal";
 import { fetchIAs } from "../redux/actions/iaActions";
+import Cookies from "js-cookie";
 
 const SubmissionsList = () => {
   const { assessId } = useParams();
   const dispatch = useDispatch();
-
   const { submissions, loading, error } = useSelector((state) => state.submissions);
   const { rubrics } = useSelector((state) => state.rubrics);
   const [showIAModal, setShowIAModal] = useState(false);
   const [selectedRubrics, setSelectedRubrics] = useState({});
-  const { ias } = useSelector((state) => state.ia)
+  const { ias } = useSelector((state) => state.ia);
+  const [selectedIA, setSelectedIA] = useState({});
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [submissionToUpdate, setSubmissionToUpdate] = useState(null);
+
+  const handleChangeIA = (submissionId, newIaId) => {
+    setSelectedIA({ ...selectedIA, [submissionId]: newIaId });
+    setSubmissionToUpdate({ submissionId, newIaId });
+    setShowConfirmModal(true); // Open confirmation modal
+  };
+
+  const handleConfirmUpdate = () => {
+    if (submissionToUpdate) {
+      dispatch(updateIA(submissionToUpdate.submissionId, submissionToUpdate.newIaId));
+      setShowConfirmModal(false);
+    }
+  };
+  const role = Cookies.get('role');
+  const userId = Cookies.get('userid');
+  const filteredSubmissions = role === "admin" || role === "super-admin"
+    ? submissions // Show all submissions
+    : submissions.filter((s) => s?.gradedBy?._id === userId); // Show only assigned ones
   useEffect(() => {
     dispatch(fetchSubmissions(assessId));
     dispatch(fetchRubrics(assessId));
     dispatch(fetchIAs());
   }, [dispatch, assessId]);
 
+  const isAdmin = role === "admin" || role === "super_admin"; // Check if user is admin 
   // Auto-fill selected rubrics from API data
   useEffect(() => {
     const preSelectedRubrics = {};
@@ -59,28 +81,30 @@ const SubmissionsList = () => {
   };
 
   // Handle submission grading
-  const handleSubmitGrading = (submissionId) => {
+  const handleSubmitGrading = async (submissionId) => {
     const selected = selectedRubrics[submissionId] || [];
     const totalMarksObtained = calculateTotalMarksObtained({
       rubricsSelected: selected,
     });
-
-    dispatch(updateSubmission(submissionId, {
+    await dispatch(updateSubmission(submissionId, {
       rubricsSelected: selected,
       totalMarks: totalMarksObtained,
       status: "Graded",
     }));
+    // Fetch updated submissions after grading
+    dispatch(fetchSubmissions(assessId));
   };
+
   const totalGraded = submissions.filter((s) => s.status === "Graded").length;
   const totalPending = submissions.filter((s) => s.status === "Pending").length;
   const totalAssigned = submissions.filter((s) => s.gradedBy).length;
   const totalUnassigned = submissions.length - totalAssigned;
 
   return (
-    <div style={{paddingTop:"100px"}}>
+    <div style={{ paddingTop: "100px" }}>
       <h2>Submissions for Assessment: {assessId}</h2>
       <div className="submissions-container">
-        <div className="submission-stats">
+        {isAdmin && <div className="submission-stats">
           <div className="stat graded">
             <p>Total Graded</p>
             <span>{totalGraded}</span>
@@ -97,9 +121,9 @@ const SubmissionsList = () => {
             <p>Total Unassigned</p>
             <span>{totalUnassigned}</span>
           </div>
-        </div>
+        </div>}
 
-        <button onClick={() => setShowIAModal(true)}>Assign IA</button>
+        {isAdmin && <button onClick={() => setShowIAModal(true)}>Assign IA</button>}
         {showIAModal && (
           <AssignIAModal
             assessId={assessId}
@@ -132,8 +156,8 @@ const SubmissionsList = () => {
               </tr>
             </thead>
             <tbody>
-              {submissions &&
-                submissions.map((submission) => (
+              {submissions && filteredSubmissions &&
+                filteredSubmissions.map((submission) => (
 
                   <tr key={submission.submissionId}>
                     <td>{submission.submissionId}</td>
@@ -144,12 +168,20 @@ const SubmissionsList = () => {
                         View
                       </a>
                     </td>
-                    <td className="graded-by"><select value={submission.gradedBy ? submission.gradedBy.name : "Not Assigned"}>
-                      {ias && ias?.map((ele) => {
-                        return <option key={ias._id}>{ele.name}</option>
-                      })
-                      }
-                    </select>
+                    <td>
+                      <select
+                        disabled={!isAdmin}
+                        value={selectedIA[submission.submissionId] || submission.gradedBy?._id || ""}
+                        onChange={(e) => handleChangeIA(submission.submissionId, e.target.value)}
+                      >
+                        <option value="">Unassign IA</option>
+                        {ias.map((ia) => (
+                          <option key={ia._id} value={ia._id}>
+                            {ia.name}
+                          </option>
+                        ))}
+
+                      </select>
                     </td>
                     <td className={submission.status === 'Pending' ? 'status-pending' : 'status-completed'}>
                       {submission.status}
@@ -177,6 +209,22 @@ const SubmissionsList = () => {
             </tbody>
           </table>
         </div>
+        {/* Confirmation Modal */}
+        {showConfirmModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <p>
+                {submissionToUpdate?.newIaId
+                  ? `Change IA for submission ${submissionToUpdate.submissionId}?`
+                  : `Remove IA from submission ${submissionToUpdate.submissionId}?`}
+              </p>
+              <div className="modal-buttons">
+                <button className="confirm-btn" onClick={handleConfirmUpdate}>Confirm</button>
+                <button className="cancel-btn" onClick={() => setShowConfirmModal(false)}>Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -72,3 +72,22 @@ export const updateSubmission = (submissionId, updatedData) => async (dispatch) 
     });
   }
 };
+
+export const updateIA = (submissionId, newIaId) => async (dispatch) => {
+  try {
+    dispatch({ type: "UPDATE_IA_REQUEST" });
+    const { data } = await axios.put("http://localhost:5000/api/submissions/update/ia", {
+      submissionId,
+      newIaId,
+    },{withCredentials:true});
+
+    dispatch({ type: "UPDATE_IA_SUCCESS", payload: data.submission });
+    } catch (error) {
+    console.error("Failed to update IA:", error.response?.data?.error);
+    dispatch({
+      type: "UPDATE_IA_FAILURE",
+      payload: error.response?.data?.error || "Failed to update IA",
+    });
+  }
+};
+

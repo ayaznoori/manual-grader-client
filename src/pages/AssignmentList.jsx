@@ -8,7 +8,7 @@ import {
 } from "../redux/actions/assignmentAction";
 import Cookies from "js-cookie"; 
 import {  createRubric } from "../redux/actions/rubricActions";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "./AssignmentList.css"; // Ensure this file is included in your project
 import RubricModal from "../components/RubricModal";
 import { fetchSubmissionsAll } from "../redux/actions/submissionAction";
@@ -89,13 +89,14 @@ const AssignmentsList = () => {
     return "Unknown Status";
 };
 
-
+  
   return (
     <div style={{paddingTop:"50px"}}>
       <h2>Assignments</h2>
       {isAdmin && (
         <div className="admin-actions">
           <button onClick={() => setShowModal("create")}>Create Assignment</button>
+          <button onClick={() =>  navigate("/register")}>Create User</button>
           <button onClick={() => setModalOpen(true)}>Upload Bulk Submission</button>
           <UploadCSVModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
         </div>
