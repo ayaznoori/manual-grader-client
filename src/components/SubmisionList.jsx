@@ -17,7 +17,7 @@ const SubmissionsList = () => {
   const [selectedRubrics, setSelectedRubrics] = useState({});
   const { ias } = useSelector((state) => state.ia);
   const [selectedIA, setSelectedIA] = useState({});
-  const [remark,setRemark]=useState("");
+  const [remark,setRemark]=useState({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [submissionToUpdate, setSubmissionToUpdate] = useState(null);
 
@@ -101,7 +101,12 @@ const SubmissionsList = () => {
   const totalPending = submissions.filter((s) => s.status === "Pending").length;
   const totalAssigned = submissions.filter((s) => s.gradedBy).length;
   const totalUnassigned = submissions.length - totalAssigned;
-
+  const handleRemarkChange = (submissionId, value) => {
+    setRemark((prevState) => ({
+        ...prevState,
+        [submissionId]: value, // Store the remark for the specific submission
+    }));
+};
   return (
     <div style={{ paddingTop: "100px" }}>
       <h2>Submissions for Assessment: {assessId}</h2>
@@ -216,7 +221,7 @@ const SubmissionsList = () => {
 
                         </td>
                       ))}
-                      <td><textarea placeholder={submission?.remark || ""} value={remark} name="" id="" cols="20" rows="10" onChange={(e)=>setRemark(e.target.value)}></textarea></td>
+                      <td><textarea placeholder={submission?.remark || ""} value={remark[submission?.submissionId] || ""} name="" id="" cols="20" rows="10" onChange={(e)=>handleRemarkChange(submission.submissionId,e.target.value)}></textarea></td>
                     <td>
                       <button onClick={() => handleSubmitGrading(submission.submissionId)}>Submit</button>
                     </td>
