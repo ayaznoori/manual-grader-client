@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 export const FETCH_SUBMISSIONS_REQUEST = "FETCH_SUBMISSIONS_REQUEST";
 export const FETCH_SUBMISSIONS_SUCCESS = "FETCH_SUBMISSIONS_SUCCESS";
 export const FETCH_SUBMISSIONS_FAILURE = "FETCH_SUBMISSIONS_FAILURE";
@@ -17,12 +18,13 @@ export const bulkUploadCSV = (file) => async (dispatch) => {
     const { data } = await axios.post('https://manual-grader-backend.onrender.com/api/submissions/bulk-upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     },{withCredentials:true});
-
+    toast.success("Bulk Uploaded Successfully!");
     dispatch({
       type: 'UPLOAD_CSV_SUCCESS',
       payload: data,
     });
   } catch (error) {
+    toast.error("Bulk upload failed");
     dispatch({
       type: 'UPLOAD_CSV_FAIL',
       payload: error.response ? error.response.data.error : error.message,
