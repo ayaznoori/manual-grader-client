@@ -110,8 +110,7 @@ const SubmissionsList = () => {
   return (
     <div style={{ paddingTop: "100px" }}>
       <h2>Submissions for Assessment: {assessId}</h2>
-      <div className="submissions-container">
-        {isAdmin && <div className="submission-stats">
+      {isAdmin && <div className="submission-stats">
           <div className="stat graded">
             <p>Total Graded</p>
             <span>{totalGraded}</span>
@@ -140,10 +139,9 @@ const SubmissionsList = () => {
             }}
           />
         )}
-
+      <div className="submissions-container">
         {loading && <p className="loading-text">Loading...</p>}
         {error && <p className="error-text">{error}</p>}
-
         <div className="table-wrapper">
           <table className="submissions-table">
             <thead>
