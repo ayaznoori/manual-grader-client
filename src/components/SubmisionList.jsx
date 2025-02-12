@@ -174,19 +174,19 @@ const SubmissionsList = () => {
                     <td>{submission.studentCode}</td>
                     <td>{new Date(submission.submittedAt).toLocaleString()}</td>
                     <td>
-                      <a href={submission?.submissionLink1 || ""} target="_blank" rel="noopener noreferrer">
+                     {submission?.submissionLink1!=""? <a href={submission?.submissionLink1 || ""} target="_blank" rel="noopener noreferrer">
                         View
-                      </a>
+                      </a>:"N/A"}
                     </td>
                     <td>
-                      <a href={submission?.submissionLink2 || ""} target="_blank" rel="noopener noreferrer">
+                     {submission?.submissionLink2!=""? <a href={submission?.submissionLink2 || ""} target="_blank" rel="noopener noreferrer">
                         View
-                      </a>
+                      </a>:"N/A"}
                     </td>
                     <td>
-                      <a href={submission?.submissionLink3 || ""} target="_blank" rel="noopener noreferrer">
+                     {submission?.submissionLink3!=""? <a href={submission?.submissionLink3 || ""} target="_blank" rel="noopener noreferrer">
                         View
-                      </a>
+                      </a>:"N/A"}
                     </td>
                     <td>
                       <select
