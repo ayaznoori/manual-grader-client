@@ -17,6 +17,7 @@ const SubmissionsList = () => {
   const [selectedRubrics, setSelectedRubrics] = useState({});
   const { ias } = useSelector((state) => state.ia);
   const [selectedIA, setSelectedIA] = useState({});
+  const [remark,setRemark]=useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [submissionToUpdate, setSubmissionToUpdate] = useState(null);
 
@@ -89,7 +90,8 @@ const SubmissionsList = () => {
     await dispatch(updateSubmission(submissionId, {
       rubricsSelected: selected,
       totalMarks: totalMarksObtained,
-      status: "Graded",
+      status: selected.length>0 ? "Graded" : "Pending",
+      remark: remark
     }));
     // Fetch updated submissions after grading
     dispatch(fetchSubmissions(assessId));
@@ -144,7 +146,9 @@ const SubmissionsList = () => {
                 <th>Submission ID</th>
                 <th>Student Code</th>
                 <th>Submitted At</th>
-                <th>Submission Link</th>
+                <th>Submission Link 1</th>
+                <th>Submission Link 2</th>
+                <th>Submission Link 3</th>
                 <th>Graded By I.A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                 <th>Status</th>
                 <th>Total Marks</th>
@@ -152,6 +156,7 @@ const SubmissionsList = () => {
                 {rubrics && rubrics.map((rubric) => (
                   <th style={{ textAlign: "center" }} key={rubric._id}>{rubric.criteria}<br />{rubric.marks}</th>
                 ))}
+                <th>Add Remark (optional)</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -164,7 +169,17 @@ const SubmissionsList = () => {
                     <td>{submission.studentCode}</td>
                     <td>{new Date(submission.submittedAt).toLocaleString()}</td>
                     <td>
-                      <a href={submission.submissionLink} target="_blank" rel="noopener noreferrer">
+                      <a href={submission?.submissionLink1 || ""} target="_blank" rel="noopener noreferrer">
+                        View
+                      </a>
+                    </td>
+                    <td>
+                      <a href={submission?.submissionLink2 || ""} target="_blank" rel="noopener noreferrer">
+                        View
+                      </a>
+                    </td>
+                    <td>
+                      <a href={submission?.submissionLink3 || ""} target="_blank" rel="noopener noreferrer">
                         View
                       </a>
                     </td>
@@ -201,6 +216,7 @@ const SubmissionsList = () => {
 
                         </td>
                       ))}
+                      <td><textarea name="" id="" cols="20" rows="10" onChange={(e)=>setRemark(e.target.value)}></textarea></td>
                     <td>
                       <button onClick={() => handleSubmitGrading(submission.submissionId)}>Submit</button>
                     </td>

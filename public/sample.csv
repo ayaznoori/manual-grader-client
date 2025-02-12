@@ -1,4 +1,4 @@
-submissionId,assessId,studentCode,submissionLink,submittedAt
-11,1234,STU001,http://example.com/submission1,2025-02-06T10:00:00Z
-21,1234,STU002,http://example.com/submission2,2025-02-06T10:30:00Z
-31,1234,STU003,http://example.com/submission3,2025-02-06T11:00:00Z
+submissionId,assessId,studentCode,submissionLink1,submissionLink2,submissionLink3,submittedAt
+11,1234,STU001,http://example.com/submission1,"","",2025-02-06T10:00:00Z
+21,1234,STU002,http://example.com/submission2,"","",2025-02-06T10:30:00Z
+31,1234,STU003,http://example.com/submission3,"",""2025-02-06T11:00:00Z
