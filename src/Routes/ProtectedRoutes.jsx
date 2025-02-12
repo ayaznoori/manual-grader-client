@@ -21,6 +21,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
         }
     } catch (error) {
         Cookies.remove("token");
+        Cookies.remove("userid");
+        Cookies.remove("role");
         return <Navigate to="/login" replace />;
     }
 
