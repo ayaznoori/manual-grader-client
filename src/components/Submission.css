@@ -23,10 +23,12 @@
   /* Table styles */
   .submissions-table {
     width: 100vw;
+    height: 300px;
     border-collapse: collapse;
     background-color: white;
     border-radius: 5px;
     overflow: hidden;
+    overflow-y: scroll;
     font-size: 12px;
   }
   
