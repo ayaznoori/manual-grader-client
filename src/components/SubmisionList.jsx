@@ -216,7 +216,7 @@ const SubmissionsList = () => {
 
                         </td>
                       ))}
-                      <td><textarea name="" id="" cols="20" rows="10" onChange={(e)=>setRemark(e.target.value)}></textarea></td>
+                      <td><textarea value={submission.remark || ""} name="" id="" cols="20" rows="10" onChange={(e)=>setRemark(e.target.value)}></textarea></td>
                     <td>
                       <button onClick={() => handleSubmitGrading(submission.submissionId)}>Submit</button>
                     </td>

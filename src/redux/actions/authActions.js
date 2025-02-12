@@ -10,7 +10,6 @@ export const loginUser = (credentials) => async (dispatch) => {
       type: "LOGIN_SUCCESS",  
       payload: { user: res.data.user, token: res.data.token },  
     });  
-    Cookies.set("token", res.data.token); 
     Cookies.set("userid", res.data.user._id); 
     Cookies.set("role",res.data.user?.role)
   } catch (error) {  
