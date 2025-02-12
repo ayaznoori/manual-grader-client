@@ -1,6 +1,8 @@
 /* Base styles */
 .submissions-container {
     width: 90vw;
+    height: 400px;
+    overflow: auto;
     padding: 2rem;
     margin: 0 auto;
     background-color: #f8f9fa;

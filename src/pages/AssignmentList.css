@@ -46,7 +46,8 @@
   }
   .submissions-container {
     width: 100%;
-    overflow-x: auto; /* Enables horizontal scrolling */
+    height: 400px;
+    overflow : auto; /* Enables horizontal scrolling */
   }
   
   .submissions-table {
