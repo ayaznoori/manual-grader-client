@@ -90,8 +90,8 @@ const SubmissionsList = () => {
     await dispatch(updateSubmission(submissionId, {
       rubricsSelected: selected,
       totalMarks: totalMarksObtained,
-      status: selected.length>0 ? "Graded" : "Pending",
-      remark: remark
+      status: selected.length>0 || remark[submissionId] ? "Graded" : "Pending",
+      remark: remark[submissionId]
     }));
     // Fetch updated submissions after grading
     dispatch(fetchSubmissions(assessId));
