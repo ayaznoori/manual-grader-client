@@ -14,9 +14,9 @@ export const bulkUploadCSV = (file) => async (dispatch) => {
   try {
     dispatch({ type: 'UPLOAD_CSV_REQUEST' });
 
-    const { data } = await axios.post('http://localhost:5000/api/submissions/bulk-upload', formData, {
+    const { data } = await axios.post('https://manual-grader-backend.onrender.com/api/submissions/bulk-upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    },{withCredentials:true});
 
     dispatch({
       type: 'UPLOAD_CSV_SUCCESS',
@@ -35,7 +35,7 @@ export const bulkUploadCSV = (file) => async (dispatch) => {
 export const fetchSubmissions = (assessId) => async (dispatch) => {
   try {
     dispatch({ type: FETCH_SUBMISSIONS_REQUEST });
-    const { data } = await axios.get(`http://localhost:5000/api/submissions/by-assessId/${assessId}`);
+    const { data } = await axios.get(`https://manual-grader-backend.onrender.com/api/submissions/by-assessId/${assessId}`,{withCredentials:true});
     dispatch({ type: FETCH_SUBMISSIONS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -47,7 +47,7 @@ export const fetchSubmissions = (assessId) => async (dispatch) => {
 export const fetchSubmissionsAll = () => async (dispatch) => {
     try {
       dispatch({ type: FETCH_SUBMISSIONS_REQUEST });
-      const { data } = await axios.get(`http://localhost:5000/api/submissions`);
+      const { data } = await axios.get(`https://manual-grader-backend.onrender.com/api/submissions`);
       dispatch({ type: FETCH_SUBMISSIONS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -62,7 +62,7 @@ export const updateSubmission = (submissionId, updatedData) => async (dispatch) 
   try {
     dispatch({ type: UPDATE_SUBMISSION_REQUEST });
 
-    const { data } = await axios.put(`http://localhost:5000/api/submissions/${submissionId}`, updatedData);
+    const { data } = await axios.put(`https://manual-grader-backend.onrender.com/api/submissions/${submissionId}`, updatedData,{withCredentials:true});
 
     dispatch({ type: UPDATE_SUBMISSION_SUCCESS, payload: data });
   } catch (error) {
@@ -76,7 +76,7 @@ export const updateSubmission = (submissionId, updatedData) => async (dispatch) 
 export const updateIA = (submissionId, newIaId) => async (dispatch) => {
   try {
     dispatch({ type: "UPDATE_IA_REQUEST" });
-    const { data } = await axios.put("http://localhost:5000/api/submissions/update/ia", {
+    const { data } = await axios.put("https://manual-grader-backend.onrender.com/api/submissions/update/ia", {
       submissionId,
       newIaId,
     },{withCredentials:true});

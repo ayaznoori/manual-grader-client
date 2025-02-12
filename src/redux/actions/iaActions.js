@@ -9,7 +9,7 @@ export const ASSIGN_IA_FAILURE = "ASSIGN_IA_FAILURE";
 export const fetchIAs = () => async (dispatch) => {
   dispatch({ type: FETCH_IAS_REQUEST });
   try {
-    const response = await axios.get("http://localhost:5000/api/auth/get-ia"); // Fetch IAs from backend
+    const response = await axios.get("https://manual-grader-backend.onrender.com/api/auth/get-ia",{withCredentials:true}); // Fetch IAs from backend
     dispatch({ type: FETCH_IAS_SUCCESS, payload: response.data });
     
   } catch (error) {
@@ -20,7 +20,7 @@ export const fetchIAs = () => async (dispatch) => {
 
 export const assignIAs = (assessId, iaAssignments) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/submissions/assign-ia", { assessId, iaAssignments });
+    const response = await axios.post("https://manual-grader-backend.onrender.com/api/submissions/assign-ia", { assessId, iaAssignments },{withCredentials:true});
     dispatch({ type: ASSIGN_IA_SUCCESS, payload: response.data });
     toast.success("IA Assigned Successfully!");
   } catch (error) {

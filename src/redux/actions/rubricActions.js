@@ -11,7 +11,7 @@ export const fetchRubrics = (assessId) => async (dispatch) => {
   try {
     dispatch({ type: FETCH_RUBRICS_REQUEST });
 
-    const { data } = await axios.get(`http://localhost:5000/api/rubrics/by-assessId/${assessId}`);
+    const { data } = await axios.get(`https://manual-grader-backend.onrender.com/api/rubrics/by-assessId/${assessId}`,{withCredentials:true});
 
     dispatch({
       type: FETCH_RUBRICS_SUCCESS,
@@ -27,7 +27,7 @@ export const fetchRubrics = (assessId) => async (dispatch) => {
 
 export const createRubric = (assignmentId, rubricData) => async (dispatch) => {
     try {
-      await axios.post("http://localhost:5000/api/rubrics/create", { assignmentId, ...rubricData });
+      await axios.post("https://manual-grader-backend.onrender.com/api/rubrics/create", { assignmentId, ...rubricData });
       dispatch(fetchRubrics(assignmentId)); // Refresh rubrics
       toast.success("Rubric added successfully!");
     } catch (error) {
@@ -37,7 +37,7 @@ export const createRubric = (assignmentId, rubricData) => async (dispatch) => {
  // Edit an Existing Rubric
 export const editRubric = (rubricId, criteria, marks) => async (dispatch) => {
   try {
-    const response = await axios.put(`http://localhost:5000/api/rubrics/${rubricId}`, { criteria, marks });
+    const response = await axios.put(`https://manual-grader-backend.onrender.com/api/rubrics/${rubricId}`, { criteria, marks },{withCredentials:true});
     dispatch({ type: EDIT_RUBRIC, payload: response.data });
   } catch (error) {
     console.error("Failed to edit rubric", error);
@@ -47,7 +47,7 @@ export const editRubric = (rubricId, criteria, marks) => async (dispatch) => {
 // Delete a Rubric
 export const deleteRubric = (rubricId) => async (dispatch) => {
   try {
-    await axios.delete(`http://localhost:5000/api/rubrics/${rubricId}`);
+    await axios.delete(`https://manual-grader-backend.onrender.com/api/rubrics/${rubricId}`,{withCredentials:true});
     dispatch({ type: DELETE_RUBRIC, payload: rubricId });
   } catch (error) {
     console.error("Failed to delete rubric", error);
@@ -57,7 +57,7 @@ export const deleteRubricById = (assessId) => async (dispatch) => {
     try {
       dispatch({ type: FETCH_RUBRICS_REQUEST });
   
-      const { data } = await axios.get(`http://localhost:5000/api/rubrics/by-assessId/${assessId}`);
+      const { data } = await axios.get(`https://manual-grader-backend.onrender.com/api/rubrics/by-assessId/${assessId}`,{withCredentials:true});
   
       dispatch({
         type: FETCH_RUBRICS_SUCCESS,
