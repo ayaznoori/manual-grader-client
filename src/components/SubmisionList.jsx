@@ -80,6 +80,10 @@ const SubmissionsList = () => {
       return rubric ? total + rubric.marks : total;
     }, 0);
   };
+  const calculateOutOf10Scale = (totalMarksObtained) => {
+    const totalMarks = rubrics.reduce((final, ele) => ele.marks + final, 0);
+    return totalMarks ? ((totalMarksObtained / totalMarks) * 10).toFixed(2) : 0;
+  };
 
   // Handle submission grading
   const handleSubmitGrading = async (submissionId) => {
@@ -87,15 +91,20 @@ const SubmissionsList = () => {
     const totalMarksObtained = calculateTotalMarksObtained({
       rubricsSelected: selected,
     });
+  
+    const outOf10Scale = calculateOutOf10Scale(totalMarksObtained); // Calculate Out of 10 Scale
+  
     await dispatch(updateSubmission(submissionId, {
       rubricsSelected: selected,
       totalMarks: totalMarksObtained,
-      status: selected.length>0 || remark[submissionId] ? "Graded" : "Pending",
-      remark: remark[submissionId]
+      status: selected.length > 0 || remark[submissionId] ? "Graded" : "Pending",
+      remark: remark[submissionId],
+      outOf10Scale: outOf10Scale 
     }));
-    // Fetch updated submissions after grading
-    dispatch(fetchSubmissions(assessId));
+  
+    dispatch(fetchSubmissions(assessId)); // Fetch updated data
   };
+  
 
   const totalGraded = submissions.filter((s) => s.status === "Graded").length;
   const totalPending = submissions.filter((s) => s.status === "Pending").length;
@@ -156,6 +165,7 @@ const SubmissionsList = () => {
                 <th>Status</th>
                 <th>Total Marks</th>
                 <th>Marks Obtained</th>
+                <th>Out of 10 Scale</th>
                 {rubrics && rubrics.map((rubric) => (
                   <th style={{ textAlign: "center" }} key={rubric._id}>{rubric.criteria}<br />{rubric.marks}</th>
                 ))}
@@ -206,6 +216,7 @@ const SubmissionsList = () => {
                     </td>
                     <td>{rubrics && rubrics.reduce((final, ele) => ele.marks + final, 0)}</td>
                     <td>{calculateTotalMarksObtained(submission)}</td>
+                    <td>{calculateOutOf10Scale(calculateTotalMarksObtained(submission))}</td>
                     {rubrics &&
                       rubrics.map((rubric) => (
                         <td key={rubric._id}>
